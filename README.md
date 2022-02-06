@@ -1,1 +1,24 @@
 # Tubes-1-Stima-Overdrive
+
+# Daftar Isi
+1. [Cara Modifikasi](#cara-modifikasi)
+2. [Cara Menjalankan](#cara-menjalankan)
+3. [Visualizing](#visualizing)
+
+# Cara Modifikasi
+- Yang perlu dimodifikasi hanyalan file **Bot.java** di folder **starter-bots/java/src/main/java/za/co/entelect/challenge**
+- Asumsi modifikasi menggunakan *IntelliJ*:
+  1. Buka folder **starter-bots** di IDE
+  2. Modifikasi kodenya
+  3. Di pojok kanan ada tab **Maven**, tekan tab tersebut
+  4. Buka folder **Lifecycle** di UI Maven 
+  5. Klik **install**.
+  6. Tunggu kompilasi selesai.
+
+# Cara Menjalankan
+1. Klik **run.bat**
+2. Tunggu program selesai berjalan.
+
+# Visualizing
+Agar lebih terbayang bagaimana pertandingan perjalan, maka program visualizer cukup membantu untuk mempelajari pergerakan. Di repo Entellect Challenge ada beberapa visualizer.
+Selain disana, ada juga visualizer online seperti di web ini : https://entelect-replay.raezor.co.za/
