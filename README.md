@@ -21,5 +21,5 @@
 
 # Visualizing
 Agar lebih terbayang bagaimana pertandingan perjalan, maka program visualizer cukup membantu untuk mempelajari pergerakan. Di repo Entellect Challenge ada beberapa visualizer.
-Link reponya : https://github.com/EntelectChallenge/2020-Overdrive/
-Selain disana, ada juga visualizer online seperti di web ini : https://entelect-replay.raezor.co.za/
+- Link reponya : https://github.com/EntelectChallenge/2020-Overdrive/
+- Selain disana, ada juga visualizer online seperti di web ini : https://entelect-replay.raezor.co.za/
