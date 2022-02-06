@@ -2,6 +2,7 @@ package za.co.entelect.challenge;
 
 import za.co.entelect.challenge.command.*;
 import za.co.entelect.challenge.entities.*;
+import za.co.entelect.challenge.enums.PowerUps;
 import za.co.entelect.challenge.enums.Terrain;
 
 import java.util.*;
@@ -12,11 +13,10 @@ public class Bot {
 
     private static final int maxSpeed = 9;
     private List<Integer> directionList = new ArrayList<>();
-
     private Random random;
-    private GameState gameState;
-    private Car opponent;
     private Car myCar;
+    private Car opponent;
+    private GameState gamestate;
     private final static Command ACCELERATE = new AccelerateCommand();
     private final static Command LIZARD = new LizardCommand();
     private final static Command OIL = new OilCommand();
@@ -29,24 +29,23 @@ public class Bot {
 
     public Bot(Random random, GameState gameState) {
         this.random = random;
-        this.gameState = gameState;
+        this.gamestate = gameState;
         this.myCar = gameState.player;
         this.opponent = gameState.opponent;
-
-        directionList.add(-1);
         directionList.add(1);
+        directionList.add(-1);
     }
 
     public Command run() {
         List<Object> blocks = getBlocksInFront(myCar.position.lane, myCar.position.block);
-        List<Object> nextBlock = blocks.get(0);
-        if (myCar.damage >= 5 || myCar.speed==0) {
+        List<Object> nextBlock = blocks.subList(0,1);//ambil elemen pertama, taruh di list
+        if (myCar.damage >= 5) {
             return FIX;
-        }/*
-        if (blocks.contains(Terrain.MUD)|| nextBlock.contains(Terrain.WALL)) {
+        }
+        if (blocks.contains(Terrain.MUD)) {
             int i = random.nextInt(directionList.size());
             return new ChangeLaneCommand(directionList.get(i));
-        }*/
+        }
         return ACCELERATE;
     }
 
@@ -55,7 +54,7 @@ public class Bot {
      * traversed at max speed.
      **/
     private List<Object> getBlocksInFront(int lane, int block) {
-        List<Lane[]> map = gameState.lanes;
+        List<Lane[]> map = this.gamestate.lanes;
         List<Object> blocks = new ArrayList<>();
         int startBlock = map.get(0)[0].position.block;
 
