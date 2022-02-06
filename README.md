@@ -26,5 +26,5 @@ Agar lebih terbayang bagaimana pertandingan perjalan, maka program visualizer cu
 - Selain disana, ada juga visualizer online seperti di web ini : https://entelect-replay.raezor.co.za/
 
 # Resources
-- Dokumentasi game rules: https://github.com/EntelectChallenge/2020-Overdrive/blob/master/game-engine/state-files.md
+- Dokumentasi game rules: https://github.com/EntelectChallenge/2020-Overdrive/blob/develop/game-engine/game-rules.md
 - Dokumentasi State dan Map: https://github.com/EntelectChallenge/2020-Overdrive/blob/master/game-engine/state-files.md
