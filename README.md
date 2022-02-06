@@ -4,6 +4,7 @@
 1. [Cara Modifikasi](#cara-modifikasi)
 2. [Cara Menjalankan](#cara-menjalankan)
 3. [Visualizing](#visualizing)
+4. [Resources](#resources)
 
 # Cara Modifikasi
 - Yang perlu dimodifikasi hanyalan file **Bot.java** di folder **starter-bots/java/src/main/java/za/co/entelect/challenge**
@@ -23,3 +24,7 @@
 Agar lebih terbayang bagaimana pertandingan perjalan, maka program visualizer cukup membantu untuk mempelajari pergerakan. Di repo Entellect Challenge ada beberapa visualizer.
 - Link reponya : https://github.com/EntelectChallenge/2020-Overdrive/
 - Selain disana, ada juga visualizer online seperti di web ini : https://entelect-replay.raezor.co.za/
+
+# Resources
+- Dokumentasi game rules: https://github.com/EntelectChallenge/2020-Overdrive/blob/master/game-engine/state-files.md
+- Dokumentasi State dan Map: https://github.com/EntelectChallenge/2020-Overdrive/blob/master/game-engine/state-files.md
