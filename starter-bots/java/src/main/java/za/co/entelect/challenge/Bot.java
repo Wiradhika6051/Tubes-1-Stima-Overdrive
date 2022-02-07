@@ -42,8 +42,25 @@ public class Bot {
         if (myCar.damage >= 5) {
             return FIX;
         }
-        if (blocks.contains(Terrain.MUD)) {
-            int i = random.nextInt(directionList.size());
+        if (blocks.contains(Terrain.MUD)||blocks.contains(Terrain.WALL)) {
+            int i=0;//menentukan arah belok(default ke kanan)
+            //dapetin list block di sebelah kanan
+            if(this.myCar.position.lane !=4) {//masih bisa belok kanan
+                List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+                if((!RightBlocks.contains(Terrain.MUD)&&!RightBlocks.contains(Terrain.WALL))||this.myCar.position.lane == 1){
+                    //kalau di lane 1 mau gak mau harus ke kanan
+                    i = 0;
+                }
+            }
+            //dapetin list block di sebelah kiri
+            if(this.myCar.position.lane !=1) {//masih bisa belok kiri
+                List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
+                if((!LeftBlocks.contains(Terrain.MUD)&& !LeftBlocks.contains(Terrain.WALL))||this.myCar.position.lane == 4){
+                    //kalau di lane 4 mau gak mau ke kiri
+                    i = 1;
+                }
+            }
+
             return new ChangeLaneCommand(directionList.get(i));
         }
         return ACCELERATE;
