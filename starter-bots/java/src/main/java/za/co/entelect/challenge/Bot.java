@@ -42,7 +42,10 @@ public class Bot {
         if (myCar.damage >= 5) {
             return FIX;
         }
-        if (blocks.contains(Terrain.MUD)||blocks.contains(Terrain.WALL)) {
+        if (myCar.speed==0){
+            return ACCELERATE;
+        }
+        if((blocks.contains(Terrain.MUD)||blocks.contains(Terrain.WALL))) {//kalau lagi berhenti accelerate dulu
             int i=0;//menentukan arah belok(default ke kanan)
             //dapetin list block di sebelah kanan
             if(this.myCar.position.lane !=4) {//masih bisa belok kanan
