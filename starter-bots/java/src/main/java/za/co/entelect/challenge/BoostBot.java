@@ -100,7 +100,7 @@ public class BoostBot {
         }
 
         // Boost logic
-        if (hasPowerUp(PowerUps.BOOST, this.myCar.powerups) && this.myCar.speed != BoostBot.maxSpeed) {
+        if (hasPowerUp(PowerUps.BOOST, this.myCar.powerups) && !this.myCar.boosting) {
             return BOOST;
         }
 
