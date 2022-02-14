@@ -39,33 +39,56 @@ public class Bot {
     public Command run() {
         List<Object> blocks = getBlocksInFront(myCar.position.lane, myCar.position.block);
         List<Object> nextBlock = blocks.subList(0,1);//ambil elemen pertama, taruh di list
-        if (myCar.damage >= 5) {
+
+        // LIHAT KONDISI DIRI SENDIRI
+
+        if (myCar.damage == 5) {
             return FIX;
         }
-        if (myCar.speed==0){
+
+        if (myCar.speed < 4){
             return ACCELERATE;
         }
-        if((blocks.contains(Terrain.MUD)||blocks.contains(Terrain.WALL))) {//kalau lagi berhenti accelerate dulu
-            int i=0;//menentukan arah belok(default ke kanan)
-            //dapetin list block di sebelah kanan
-            if(this.myCar.position.lane !=4) {//masih bisa belok kanan
-                List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
-                if((!RightBlocks.contains(Terrain.MUD)&&!RightBlocks.contains(Terrain.WALL))||this.myCar.position.lane == 1){
-                    //kalau di lane 1 mau gak mau harus ke kanan
-                    i = 0;
-                }
-            }
-            //dapetin list block di sebelah kiri
-            if(this.myCar.position.lane !=1) {//masih bisa belok kiri
-                List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
-                if((!LeftBlocks.contains(Terrain.MUD)&& !LeftBlocks.contains(Terrain.WALL))||this.myCar.position.lane == 4){
-                    //kalau di lane 4 mau gak mau ke kiri
-                    i = 1;
-                }
-            }
 
-            return new ChangeLaneCommand(directionList.get(i));
+        if (myCar.damage > 3) {
+            return FIX;
         }
+
+        // LIHAT KONDISI LAPANGAN DI DEPANNYA
+
+        // MUD/WALL/OIL SPILL -> ganti arah
+        if(obstacleOnLine(blocks)) {
+            // dapetin list block di sebelah kanan
+            if(this.myCar.position.lane < 4) {// masih bisa belok kanan
+                List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+                if(!obstacleOnLine(RightBlocks) || this.myCar.position.lane == 1){
+                    // kalau di lane 1 mau gak mau harus ke kanan
+                    return TURN_RIGHT;
+                }
+            }
+            //   dapetin list block di sebelah kiri
+            if(this.myCar.position.lane > 1) { //masih bisa belok kiri
+                List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
+                if(!obstacleOnLine(LeftBlocks) || this.myCar.position.lane == 4){
+                    // kalau di lane 4 mau gak mau ke kiri
+                    return TURN_LEFT;
+                }
+            }
+            // kalo di tengah, ada kanan/kiri yang lebih baik, ambil belokan yang ada boostnya
+        }
+
+        // BOOST -> ambil, langsung pake
+        if (hasPowerUp(PowerUps.BOOST, myCar.powerups)) {
+            return BOOST;
+        }
+
+        // TODO: kalo semua aman, cari track yang ada boostnya
+
+        // TODO: pikirin juga buat nguliin semua kemungkinan getBlocksInFront(<1 sampe 4>, myCar.position.block)
+        // buat nyari semua boost
+
+        // KALO KONDISI DIRI SENDIRI DAN LAPANGAN LANCAR
+
         return ACCELERATE;
     }
 
@@ -88,6 +111,24 @@ public class Bot {
 
         }
         return blocks;
+    }
+
+    private boolean obstacleOnLine(List<Object> blocks){
+        return blocks.contains(Terrain.MUD) || blocks.contains(Terrain.WALL) || blocks.contains(Terrain.OIL_SPILL);
+    }
+
+    private boolean powerupOnLine(List<Object> blocks){
+        return blocks.contains(Terrain.OIL_POWER) || blocks.contains(Terrain.BOOST) ||
+        blocks.contains(Terrain.LIZARD) || blocks.contains(Terrain.TWEET) || blocks.contains(Terrain.EMP);
+    }
+
+    private boolean hasPowerUp(PowerUps powerUpToCheck, PowerUps[] available) {
+        for (PowerUps powerUp: available) {
+            if (powerUp.equals(powerUpToCheck)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
