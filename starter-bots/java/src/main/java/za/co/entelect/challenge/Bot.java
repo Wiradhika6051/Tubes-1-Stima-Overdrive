@@ -38,7 +38,15 @@ public class Bot {
 
     public Command run() {
         List<Object> blocks = getBlocksInFront(myCar.position.lane, myCar.position.block);
+        List<Object> track1 = getBlocksInFront(1, myCar.position.block);
+        List<Object> track2 = getBlocksInFront(2, myCar.position.block);
+        List<Object> track3 = getBlocksInFront(3, myCar.position.block);
+        List<Object> track4 = getBlocksInFront(4, myCar.position.block);
+
         List<Object> nextBlock = blocks.subList(0,1);//ambil elemen pertama, taruh di list
+
+        List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+        List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
 
         // LIHAT KONDISI DIRI SENDIRI
 
@@ -58,17 +66,13 @@ public class Bot {
 
         // MUD/WALL/OIL SPILL -> ganti arah
         if(obstacleOnLine(blocks)) {
-            // dapetin list block di sebelah kanan
             if(this.myCar.position.lane < 4) {// masih bisa belok kanan
-                List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
                 if(!obstacleOnLine(RightBlocks) || this.myCar.position.lane == 1){
                     // kalau di lane 1 mau gak mau harus ke kanan
                     return TURN_RIGHT;
                 }
             }
-            //   dapetin list block di sebelah kiri
             if(this.myCar.position.lane > 1) { //masih bisa belok kiri
-                List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
                 if(!obstacleOnLine(LeftBlocks) || this.myCar.position.lane == 4){
                     // kalau di lane 4 mau gak mau ke kiri
                     return TURN_LEFT;
@@ -82,7 +86,14 @@ public class Bot {
             return BOOST;
         }
 
-        // TODO: kalo semua aman, cari track yang ada boostnya
+        RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+        LeftBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+        if (powerupOnLine(RightBlocks)){
+            return TURN_RIGHT;
+        }
+        if (powerupOnLine(LeftBlocks)){
+            return TURN_LEFT;
+        }
 
         // TODO: pikirin juga buat nguliin semua kemungkinan getBlocksInFront(<1 sampe 4>, myCar.position.block)
         // buat nyari semua boost
