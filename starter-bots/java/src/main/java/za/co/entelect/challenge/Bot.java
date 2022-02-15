@@ -26,6 +26,7 @@ public class Bot {
 
     private final static Command TURN_RIGHT = new ChangeLaneCommand(1);
     private final static Command TURN_LEFT = new ChangeLaneCommand(-1);
+    private final static Command DO_NOTHING = new DoNothingCommand();
 
     public Bot(Random random, GameState gameState) {
         this.random = random;
@@ -41,7 +42,7 @@ public class Bot {
         List<Object> lane2 = getBlocksInFront(2, myCar.position.block,myCar.speed);
         List<Object> lane3 = getBlocksInFront(3, myCar.position.block,myCar.speed);
         List<Object> lane4 = getBlocksInFront(4, myCar.position.block,myCar.speed);
-
+        int currLane = myCar.position.lane-1;
         //List<Object> blocks = getBlocksInFront(myCar.position.lane, myCar.position.block,myCar.speed);
         //List<Object> nextBlock = blocks.subList(0,1);//ambil elemen pertama, taruh di list
         if (myCar.damage >= 5) {
@@ -55,7 +56,6 @@ public class Bot {
         lanesrisk[1] = getRiskValue(lane2);
         lanesrisk[2] = getRiskValue(lane3);
         lanesrisk[3] = getRiskValue(lane4);
-        int currLane = myCar.position.lane-1;
         int decision = 0;//-1 berarti ke kiri, 0 tetep, 1 ke kanan
         if(lanesrisk[currLane]>0) {
             if(currLane==0) {//cuma bisa lurus atau ke kanan
@@ -63,7 +63,7 @@ public class Bot {
                     decision = 1;
                 }
             }
-            else if(currLane==3) {//cuma bisa lurus sama ke kir
+            else if(currLane==3) {//cuma bisa lurus sama ke kiri
                 if (lanesrisk[currLane] > lanesrisk[currLane - 1]) {
                     decision = -1;
                 }
@@ -75,6 +75,9 @@ public class Bot {
             }
             if(decision!=0){
                 return new ChangeLaneCommand(decision);
+            }
+            else if(hasPowerUps(myCar.powerups,PowerUps.LIZARD)){
+                return LIZARD;
             }
         }
         /*
@@ -97,10 +100,16 @@ public class Bot {
                 }
             }
             */
-            if(hasPowerUps(myCar.powerups,PowerUps.LIZARD)){
-                return LIZARD;
+            if(myCar.damage>0){
+                return FIX;
             }
-        return ACCELERATE;
+            if(hasPowerUps(myCar.powerups,PowerUps.BOOST)&& lanesrisk[currLane]==0&&!myCar.boosting){
+                return BOOST;
+            }
+            if(!myCar.boosting) {
+                return ACCELERATE;
+            }
+            return DO_NOTHING;
     }
 
     /**

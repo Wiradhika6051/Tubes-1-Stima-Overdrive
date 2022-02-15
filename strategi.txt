@@ -1,0 +1,5 @@
+Strategi konservatif (minimumkan damage)
+(v) cek block depan, kanan kiri, sampai current_speed 
+(v) kalo ada mud, oil , wall cyber truck geser
+(v) kalo ada semua bikin fungsi risiko , priority: oil>mud>wall>truck
+- kalo misal di kiri kanan ada, namun jika di deacceleate bisa dihindari, deaccelerate dulu
