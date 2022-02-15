@@ -9,6 +9,8 @@ import java.util.*;
 
 import static java.lang.Math.max;
 
+import java.security.SecureRandom;
+
 public class Bot {
 
     private static final int maxSpeed = 9;
@@ -43,10 +45,7 @@ public class Bot {
         List<Object> track3 = getBlocksInFront(3, myCar.position.block);
         List<Object> track4 = getBlocksInFront(4, myCar.position.block);
 
-        List<Object> nextBlock = blocks.subList(0,1);//ambil elemen pertama, taruh di list
-
-        List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
-        List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
+        List<Object> nextBlocks = blocks.subList(0,1);//ambil elemen pertama, taruh di list
 
         // LIHAT KONDISI DIRI SENDIRI
 
@@ -66,33 +65,36 @@ public class Bot {
 
         // MUD/WALL/OIL SPILL -> ganti arah
         if(obstacleOnLine(blocks)) {
-            if(this.myCar.position.lane < 4) {// masih bisa belok kanan
-                if(!obstacleOnLine(RightBlocks) || this.myCar.position.lane == 1){
-                    // kalau di lane 1 mau gak mau harus ke kanan
+            if (hasPowerUp(PowerUps.LIZARD, myCar.powerups)) { // pake lizard kalo ada powerup biar bisa loncat
+                return LIZARD;
+            } else {
+                if (myCar.position.lane == 1){
                     return TURN_RIGHT;
-                }
-            }
-            if(this.myCar.position.lane > 1) { //masih bisa belok kiri
-                if(!obstacleOnLine(LeftBlocks) || this.myCar.position.lane == 4){
-                    // kalau di lane 4 mau gak mau ke kiri
+                } else if(myCar.position.lane == 4){
+                    return TURN_LEFT;
+                } else {
+                    // at this point bisa belok kiri belok kanan, pilih yang gaada obstacle & ada boost
+                    List<Object> RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
+                    List<Object> LeftBlocks = getBlocksInFront(myCar.position.lane-1, myCar.position.block);
+                    if(obstacleOnLine(RightBlocks)){
+                        return TURN_LEFT;
+                    }
+                    if(obstacleOnLine(LeftBlocks)){
+                        return TURN_RIGHT;
+                    }
+                    // kalo kanan kiri aman, pilih yang ada boostnya
+                    if(powerUpOnLine(RightBlocks)){
+                        return TURN_RIGHT;
+                    }
                     return TURN_LEFT;
                 }
             }
-            // kalo di tengah, ada kanan/kiri yang lebih baik, ambil belokan yang ada boostnya
+
         }
 
         // BOOST -> ambil, langsung pake
         if (hasPowerUp(PowerUps.BOOST, myCar.powerups)) {
             return BOOST;
-        }
-
-        RightBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
-        LeftBlocks = getBlocksInFront(myCar.position.lane+1, myCar.position.block);
-        if (powerupOnLine(RightBlocks)){
-            return TURN_RIGHT;
-        }
-        if (powerupOnLine(LeftBlocks)){
-            return TURN_LEFT;
         }
 
         // TODO: pikirin juga buat nguliin semua kemungkinan getBlocksInFront(<1 sampe 4>, myCar.position.block)
@@ -128,12 +130,12 @@ public class Bot {
         return blocks.contains(Terrain.MUD) || blocks.contains(Terrain.WALL) || blocks.contains(Terrain.OIL_SPILL);
     }
 
-    private boolean powerupOnLine(List<Object> blocks){
+    private boolean powerUpOnLine(List<Object> blocks){
         return blocks.contains(Terrain.OIL_POWER) || blocks.contains(Terrain.BOOST) ||
         blocks.contains(Terrain.LIZARD) || blocks.contains(Terrain.TWEET) || blocks.contains(Terrain.EMP);
     }
 
-    private boolean hasPowerUp(PowerUps powerUpToCheck, PowerUps[] available) {
+    private Boolean hasPowerUp(PowerUps powerUpToCheck, PowerUps[] available) {
         for (PowerUps powerUp: available) {
             if (powerUp.equals(powerUpToCheck)) {
                 return true;
