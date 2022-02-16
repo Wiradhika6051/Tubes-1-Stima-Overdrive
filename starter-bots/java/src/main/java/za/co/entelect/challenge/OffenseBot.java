@@ -70,6 +70,11 @@ public class OffenseBot {
             return FIX;
         }
 
+        // Restart logic
+        if (this.myCar.speed == 0) {
+            return ACCELERATE;
+        }
+
         // Collision avoidance logic
         if (blocks.contains(Terrain.MUD) || blocks.contains(Terrain.OIL_SPILL) || blocks.contains(Terrain.WALL)) {
             List<Object> leftBlocks = new ArrayList<>();
