@@ -88,33 +88,69 @@ public class OffenseBot {
             }
 
             if (this.canTurn.get(0) && this.canTurn.get(1)) {
-                if (leftBlocks.contains(Terrain.OIL_POWER) || leftBlocks.contains(Terrain.EMP)
-                        || leftBlocks.contains(Terrain.TWEET)) {
+                if ((leftBlocks.contains(Terrain.MUD) || leftBlocks.contains(Terrain.OIL_SPILL) || leftBlocks.contains(Terrain.WALL))
+                        && (rightBlocks.contains(Terrain.MUD) || rightBlocks.contains(Terrain.OIL_SPILL) || rightBlocks.contains(Terrain.WALL))
+                        && hasPowerUp(PowerUps.LIZARD, myCar.powerups)) {
+                    return LIZARD;
+                } else if (leftBlocks.contains(Terrain.MUD) || leftBlocks.contains(Terrain.OIL_SPILL) || leftBlocks.contains(Terrain.WALL)) {
+                    return TURN_RIGHT;
+                } else if (rightBlocks.contains(Terrain.MUD) || rightBlocks.contains(Terrain.OIL_SPILL) || rightBlocks.contains(Terrain.WALL)) {
                     return TURN_LEFT;
-                } else if (rightBlocks.contains(Terrain.OIL_POWER) || rightBlocks.contains(Terrain.EMP)
-                        || rightBlocks.contains(Terrain.TWEET)) {
+                } else if (leftBlocks.contains(Terrain.BOOST) || leftBlocks.contains(Terrain.OIL_POWER) || leftBlocks.contains(Terrain.EMP)
+                        || leftBlocks.contains(Terrain.TWEET) || leftBlocks.contains(Terrain.LIZARD)) {
+                    return TURN_LEFT;
+                } else if (rightBlocks.contains(Terrain.BOOST) || rightBlocks.contains(Terrain.OIL_POWER) || rightBlocks.contains(Terrain.EMP)
+                        || rightBlocks.contains(Terrain.TWEET) || rightBlocks.contains(Terrain.LIZARD)) {
                     return TURN_RIGHT;
                 } else {
                     int i = this.random.nextInt(directionList.size());
                     return this.directionList.get(i);
                 }
             } else if (this.canTurn.get(0)) {
-                return TURN_LEFT;
-            } else if (this.canTurn.get(1)) {
-                return TURN_RIGHT;
-            } else {
-                if (hasPowerUp(PowerUps.LIZARD, myCar.powerups)) {
+                if ((leftBlocks.contains(Terrain.MUD) || leftBlocks.contains(Terrain.OIL_SPILL) || leftBlocks.contains(Terrain.WALL))
+                        && hasPowerUp(PowerUps.LIZARD, myCar.powerups)) {
                     return LIZARD;
                 } else {
-                    return ACCELERATE;
+                    return TURN_LEFT;
+                }
+            } else if (this.canTurn.get(1)) {
+                if ((rightBlocks.contains(Terrain.MUD) || rightBlocks.contains(Terrain.OIL_SPILL) || rightBlocks.contains(Terrain.WALL))
+                        && hasPowerUp(PowerUps.LIZARD, myCar.powerups)) {
+                    return LIZARD;
+                } else {
+                    return TURN_RIGHT;
                 }
             }
         }
 
+        // Accelerate logic
+        if (this.myCar.speed <= 5) {
+            return ACCELERATE;
+        }
+
+        // Finish boost logic
+        if (blocks.contains(Terrain.FINISH) && hasPowerUp(PowerUps.BOOST, this.myCar.powerups)) {
+            return BOOST;
+        }
+
+        // EMP logic
+        if (hasPowerUp(PowerUps.EMP, this.myCar.powerups)
+                && opponentBlock > myBlock
+                && abs(opponentLane - myLane) <= 1) {
+            return EMP;
+        }
+
         // Tweet logic
-        if (hasPowerUp(PowerUps.TWEET, this.myCar.powerups) && this.myCar.speed == OffenseBot.maxSpeed
+        if (hasPowerUp(PowerUps.TWEET, this.myCar.powerups) && this.myCar.speed >= OffenseBot.maxSpeed
                 && !blocks.contains(Terrain.FINISH)) {
-            return new TweetCommand(opponentLane, opponentBlock + this.opponent.speed);
+            switch (this.opponent.speed) {
+                case 0 : return new TweetCommand(opponentLane, opponentBlock + 4);
+                case 3 : return new TweetCommand(opponentLane, opponentBlock + 7);
+                case 6 : return new TweetCommand(opponentLane, opponentBlock + 9);
+                case 8 : // Merged with case 9
+                case 9 : return new TweetCommand(opponentLane, opponentBlock + 10);
+                case 15 : return new TweetCommand(opponentLane, opponentBlock + 16);
+            }
         }
 
         // Oil logic
@@ -122,14 +158,6 @@ public class OffenseBot {
                 && opponentBlock < myBlock
                 && abs(opponentLane - myLane) <= 1) {
             return OIL;
-        }
-
-        // EMP logic
-        // Opponent's coordinate must satisfy y > x && y > -x
-        if (hasPowerUp(PowerUps.EMP, this.myCar.powerups)
-                && opponentBlock - myBlock > negateExact(opponentLane - myLane)
-                && opponentBlock - myBlock > opponentLane - myLane) {
-            return EMP;
         }
 
         // Boost logic
