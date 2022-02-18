@@ -2,8 +2,6 @@
 
 Implementasi algoritma *greedy* dalam pembuatan Bot Overdrive dari Entelect Challenge 2020 untuk memenuhi Tugas Besar 1 IF2211 Strategi Algoritma Semester 2 2021/2022.
 
-Dibuat oleh: Kelompok 26 - にげろう
-
 ## Penjelasan Algoritma
 
 Algoritma *greedy* yang kami pilih adalah algoritma *greedy offensive*, yang memprioritaskan pengambilan power-up yang bersifat intrusif terhadap lawan pada fungsi seleksinya. 
@@ -22,8 +20,10 @@ Fungsi objektif dari strategi ini bertujuan untuk mendisrupsi lawan sebanyak-ban
 
 ### Compile Bot
 Modifikasi menggunakan IntelliJ IDEA:
-1. Modifikasi kode pada `Bot.java` di folder `starter-bots/java/src/main/java/za/co/entelect/challenge`
-2. Buka sidetab Maven di sebelah kanan, buka folder `lifecycle` > `install`. Tunggu hingga kompilasi selesai.
+1. Jika tidak ada, aktifkan tool Maven dengan klik View > Tool Windows > Maven pada toolbar.
+2. Modifikasi kode pada `Bot.java` di folder `starter-bots/java/src/main/java/za/co/entelect/challenge`.
+3. Jika tidak otomatis terdaftar, klik kanan pada `pom.xml` > Add as a Maven Project.
+2. Buka tool Maven di sebelah kanan, buka folder `lifecycle` > `install`. Tunggu hingga kompilasi selesai.
 
 ### Mempertandingkan Bot
 Untuk mempertandingkan bot, dapat digunakan program yang terdapat pada [2020-Overdrive](https://github.com/EntelectChallenge/2020-Overdrive), atau langsung di tree [main](https://github.com/Wiradhika6051/Tubes-1-Stima-Overdrive/tree/main) dari repositori submisi kami.
@@ -39,7 +39,7 @@ Terdapat bug ketika nama file executable pada folder `bin` adalah `にげろう.
 [Bacaan](https://stackoverflow.com/questions/14998507/how-to-run-an-executable-jar-when-its-path-name-contains-unicode-characters)
 
 ## Author
-Dibuat oleh:
+Dibuat oleh: Kelompok 26 - にげろう
 1. Jeremy S.O.N. Simbolon (13520042)
 2. Fawwaz Anugrah Wiradhika Dharmasatya (13520086)
 3. Alifia Rahmah (13520122)
