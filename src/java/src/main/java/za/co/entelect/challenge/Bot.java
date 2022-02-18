@@ -14,7 +14,7 @@ import static java.lang.Math.*;
  * Represents a bot that implements the Offense Strategy:
  * Try to disrupt the opponent as much as possible
  */
-public class OffenseBot {
+public class Bot {
 
     private static final int maxSpeed = 9;
     private List<Command> directionList = new ArrayList<>();
@@ -35,7 +35,7 @@ public class OffenseBot {
     private final static Command TURN_LEFT = new ChangeLaneCommand(-1);
     private final static Command TURN_RIGHT = new ChangeLaneCommand(1);
 
-    public OffenseBot(GameState gameState) {
+    public Bot(Random random, GameState gameState) {
         this.random = new SecureRandom();
         this.gameState = gameState;
         this.myCar = gameState.player;
@@ -141,7 +141,7 @@ public class OffenseBot {
         }
 
         // Tweet logic
-        if (hasPowerUp(PowerUps.TWEET, this.myCar.powerups) && this.myCar.speed >= OffenseBot.maxSpeed
+        if (hasPowerUp(PowerUps.TWEET, this.myCar.powerups) && this.myCar.speed >= Bot.maxSpeed
                 && !blocks.contains(Terrain.FINISH)) {
             switch (this.opponent.speed) {
                 case 0 : return new TweetCommand(opponentLane, opponentBlock + 4);
@@ -196,7 +196,7 @@ public class OffenseBot {
         int startBlock = map.get(0)[0].position.block;
 
         Lane[] laneList = map.get(lane - 1);
-        for (int i = max(block - startBlock, 0); i <= block - startBlock + OffenseBot.maxSpeed; i++) {
+        for (int i = max(block - startBlock, 0); i <= block - startBlock + Bot.maxSpeed; i++) {
             if (laneList[i] == null || laneList[i].terrain == Terrain.FINISH) {
                 break;
             }
