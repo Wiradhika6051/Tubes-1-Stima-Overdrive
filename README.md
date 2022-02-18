@@ -2,6 +2,8 @@
 
 Implementasi algoritma *greedy* dalam pembuatan Bot Overdrive dari Entelect Challenge 2020 untuk memenuhi Tugas Besar 1 IF2211 Strategi Algoritma Semester 2 2021/2022.
 
+Dibuat oleh: Kelompok 26 - にげろう
+
 ## Penjelasan Algoritma
 
 Algoritma *greedy* yang kami pilih adalah algoritma *greedy offensive*, yang memprioritaskan pengambilan power-up yang bersifat intrusif terhadap lawan pada fungsi seleksinya. 
@@ -24,11 +26,15 @@ Modifikasi menggunakan IntelliJ IDEA:
 2. Buka sidetab Maven di sebelah kanan, buka folder `lifecycle` > `install`. Tunggu hingga kompilasi selesai.
 
 ### Mempertandingkan Bot
-Untuk mempertandingkan bot, digunakan program yang terdapat pada [2020-Overdrive](https://github.com/EntelectChallenge/2020-Overdrive), atau langsung di tree [main](https://github.com/Wiradhika6051/Tubes-1-Stima-Overdrive/tree/main) dari repositori submisi kami.
+Untuk mempertandingkan bot, dapat digunakan program yang terdapat pada [2020-Overdrive](https://github.com/EntelectChallenge/2020-Overdrive), atau langsung di tree [main](https://github.com/Wiradhika6051/Tubes-1-Stima-Overdrive/tree/main) dari repositori submisi kami.
 
 Langsung dari tree `main`:
-1. Ubah lokasi bot `player-a` dan `player-b` pada `game-runner-config.json`
-1. Jalankan `run.bat`
+1. Clone repository ini
+2. Inisasi bot sebagai `player-a` atau `player-b` pada `game-runner-config.json`, dengan menaruh filepath dari `bot.json` (Jika repository di-clone di root folder, dapat diisi dengan `./Tubes1_にげろう/bin`)
+3. Jalankan `run.bat`
+
+## Known Bugs
+Terdapat bug ketika membuat nama file executable pada folder `bin` menjadi `にげろう.jar`. Karena bot tidak dapat berjalan dengan baik ketika digunakan filename げろう, sehingga digunakan nama `nigerou.jar`, dengan nickname Bot tetap にげろう.
 
 ## Author
 Dibuat oleh:
