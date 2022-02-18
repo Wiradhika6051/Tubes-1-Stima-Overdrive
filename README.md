@@ -33,8 +33,10 @@ Langsung dari tree `main`:
 2. Inisasi bot sebagai `player-a` atau `player-b` pada `game-runner-config.json`, dengan menaruh filepath dari `bot.json` (Jika repository di-clone di root folder, dapat diisi dengan `./Tubes1_にげろう/bin`)
 3. Jalankan `run.bat`
 
+Jika sudah terbentuk match-log, dapat divisualisasikan dengan mengunggah match-log dalam bentuk zip pada https://entelect-replay.raezor.co.za/.
+
 ## Known Bugs
-Terdapat bug ketika nama file executable pada folder `bin` adalah `にげろう.jar`. Karena bot tidak dapat berjalan dengan baik ketika digunakan filename げろう, sehingga digunakan nama `nigerou.jar`, dengan nickname Bot tetap にげろう.
+Terdapat bug ketika nama file executable pada folder `bin` adalah `にげろう.jar`. Bot tidak dapat berjalan dengan baik ketika digunakan filename げろう, sehingga digunakan nama `nigerou.jar`, dengan nickname Bot tetap にげろう.
 
 [Bacaan](https://stackoverflow.com/questions/14998507/how-to-run-an-executable-jar-when-its-path-name-contains-unicode-characters)
 
