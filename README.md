@@ -34,7 +34,9 @@ Langsung dari tree `main`:
 3. Jalankan `run.bat`
 
 ## Known Bugs
-Terdapat bug ketika membuat nama file executable pada folder `bin` menjadi `にげろう.jar`. Karena bot tidak dapat berjalan dengan baik ketika digunakan filename げろう, sehingga digunakan nama `nigerou.jar`, dengan nickname Bot tetap にげろう.
+Terdapat bug ketika nama file executable pada folder `bin` adalah `にげろう.jar`. Karena bot tidak dapat berjalan dengan baik ketika digunakan filename げろう, sehingga digunakan nama `nigerou.jar`, dengan nickname Bot tetap にげろう.
+
+[Bacaan](https://stackoverflow.com/questions/14998507/how-to-run-an-executable-jar-when-its-path-name-contains-unicode-characters)
 
 ## Author
 Dibuat oleh:
