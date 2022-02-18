@@ -26,9 +26,11 @@ Modifikasi menggunakan IntelliJ IDEA:
 2. Buka tool Maven di sebelah kanan, buka folder `lifecycle` > `install`. Tunggu hingga kompilasi selesai.
 
 ### Mempertandingkan Bot
-Untuk mempertandingkan bot, dapat digunakan program yang terdapat pada [2020-Overdrive](https://github.com/EntelectChallenge/2020-Overdrive), atau langsung di tree [main](https://github.com/Wiradhika6051/Tubes-1-Stima-Overdrive/tree/main) dari repositori submisi kami.
+Untuk mempertandingkan bot, dapat digunakan program yang terdapat pada [2020-Overdrive](https://github.com/EntelectChallenge/2020-Overdrive), atau langsung di branch [main](https://github.com/Wiradhika6051/Tubes-1-Stima-Overdrive/tree/main) dari repositori ini.
 
-Langsung dari tree `main`:
+Secara garis besar, untuk mempertandingkan 2 Bot diperlukan 2 binary file Bot yang sudah jadi, serta mengubah konfigurasi pada `game-runner-config.json`.
+
+Dari tree `main`:
 1. Clone repository ini
 2. Inisasi bot sebagai `player-a` atau `player-b` pada `game-runner-config.json`, dengan menaruh filepath dari `bot.json` (Jika repository di-clone di root folder, dapat diisi dengan `./Tubes1_にげろう/bin`)
 3. Jalankan `run.bat`
